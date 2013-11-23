@@ -18,6 +18,7 @@
 - (IBAction)shuffleCards:(id)sender;
 - (IBAction)gameMode:(id)sender;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeControl;
+@property (weak, nonatomic) IBOutlet UILabel *matchStatus;
 
 @end
 
@@ -66,6 +67,7 @@
     self.gameModeControl.enabled = NO;
     int chooseButtonIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chooseButtonIndex];
+    [self setMatchStatus];
     [self updateUI];
 }
 
@@ -83,6 +85,12 @@
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     }
     
+}
+
+- (void) setMatchStatus
+{
+
+    self.matchStatus.text = [NSString stringWithFormat:@"No status"];
 }
 
 - (NSString *) titleForCard: (Card *) card
