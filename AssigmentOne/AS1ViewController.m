@@ -97,6 +97,15 @@
             self.matchStatus.text = [NSString stringWithFormat:@"%@ %@ don't match",[[[self.game statusCards] objectAtIndex:0] contents],[[[self.game statusCards] objectAtIndex:1] contents]];
         }
     }
+    
+    if ([[self.game statusCards] count] == 3)  {
+        if ([self.game roundScore] > 0) {
+            self.matchStatus.text = [NSString stringWithFormat:@"Match %@ %@ %@ for %d points",[[[self.game statusCards] objectAtIndex:0] contents],[[[self.game statusCards] objectAtIndex:1] contents],[[[self.game statusCards] objectAtIndex:2] contents] ,[self.game roundScore]];
+        } else {
+            self.matchStatus.text = [NSString stringWithFormat:@"%@ %@ %@ don't match",[[[self.game statusCards] objectAtIndex:0] contents],[[[self.game statusCards] objectAtIndex:1] contents],[[[self.game statusCards] objectAtIndex:2] contents ]];
+        }
+    }
+    
     [[self.game statusCards] removeAllObjects];
 }
 

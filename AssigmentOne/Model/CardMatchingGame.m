@@ -127,15 +127,20 @@ static const int COST_TO_CHOOSE = 1;
     NSLog(@"Breaks Before Checking count");
     if (self.faceUpCards.count == 2) {
         NSLog(@"Breaks After Checking count");
+        [self.statusCards insertObject:[self.faceUpCards objectAtIndex:0] atIndex:0];
+        [self.statusCards insertObject:[self.faceUpCards objectAtIndex:1] atIndex:1];
+        [self.statusCards insertObject:card atIndex:2];
         int matchscore = [card match:self.faceUpCards];
         NSLog(@"Breaks After Match call");
         if (matchscore) {
             self.score += matchscore * MATCH_BONUS;
+            self.roundScore = matchscore * MATCH_BONUS;
             for (Card *faceUpCard in self.faceUpCards) {
                 faceUpCard.unplayable = YES;
             }
             card.unplayable = YES;
         } else {
+            self.roundScore = -1 * MISMATCH_PENALTY;
             self.score -= MISMATCH_PENALTY * 2;
             for (Card *faceUpCard in self.faceUpCards) {
                 faceUpCard.faceUp = NO;
