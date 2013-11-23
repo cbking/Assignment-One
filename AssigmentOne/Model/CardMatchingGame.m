@@ -10,8 +10,11 @@
 
 @interface CardMatchingGame()
 @property (nonatomic, readwrite) NSInteger score;
+@property (nonatomic, readwrite) NSInteger roundScore;
 @property (nonatomic, strong) NSMutableArray *cards;
 @property (nonatomic, strong) NSMutableArray *faceUpCards;
+@property (nonatomic,strong, readwrite) NSMutableArray * statusCards;
+
 @end
 
 @implementation CardMatchingGame
@@ -21,6 +24,13 @@
     if (!_cards) _cards = [[NSMutableArray alloc] init];
     return _cards;
 }
+
+- (NSMutableArray *) statusCards
+{
+    if (!_statusCards) _statusCards = [[NSMutableArray alloc] init];
+    return _statusCards;
+}
+
 
 - (NSMutableArray *)faceUpCards
 {
@@ -71,12 +81,16 @@ static const int COST_TO_CHOOSE = 1;
         for (Card *otherCard in self.cards) {
             if (otherCard.isFaceUp && !otherCard.isUnplayable) {
                 int matchscore = [card match:@[otherCard]];
+                [self.statusCards insertObject:card atIndex:0];
+                [self.statusCards insertObject:otherCard atIndex:1];
                 if (matchscore) {
                     self.score += matchscore * MATCH_BONUS;
+                    self.roundScore = matchscore * MATCH_BONUS;
                     otherCard.unplayable = YES;
                     card.unplayable = YES;
                 } else {
                     self.score -= MISMATCH_PENALTY;
+                    self.roundScore = -1 * MISMATCH_PENALTY;
                     otherCard.faceUp = NO;
                 }
                 break; //you can other choose two cards for now;

@@ -89,8 +89,15 @@
 
 - (void) setMatchStatus
 {
-
-    self.matchStatus.text = [NSString stringWithFormat:@"No status"];
+    NSLog(@"size of status cards is %d", [[self.game statusCards] count]   );
+    if ([[self.game statusCards] count] == 2)  {
+        if ([self.game roundScore] > 0) {
+            self.matchStatus.text = [NSString stringWithFormat:@"Match %@ %@ for %d points",[[[self.game statusCards] objectAtIndex:0] contents],[[[self.game statusCards] objectAtIndex:1] contents], [self.game roundScore]];
+        } else {
+            self.matchStatus.text = [NSString stringWithFormat:@"%@ %@ don't match",[[[self.game statusCards] objectAtIndex:0] contents],[[[self.game statusCards] objectAtIndex:1] contents]];
+        }
+    }
+    [[self.game statusCards] removeAllObjects];
 }
 
 - (NSString *) titleForCard: (Card *) card

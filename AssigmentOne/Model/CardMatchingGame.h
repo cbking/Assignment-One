@@ -20,6 +20,8 @@
 - (Card*) cardAtIndex:(NSUInteger)index;
 
 
+@property (nonatomic, strong, readonly) NSMutableArray *statusCards;
+@property (nonatomic, readonly) NSInteger roundScore;
 @property (nonatomic, readonly) NSInteger score;
 @property BOOL isThreeCardGame;
 
